@@ -125,6 +125,8 @@ class Board:
             board_id = self._udoo_id()
         elif chip_id == chips.PENTIUM_N3710:
             board_id = self._udoo_id()
+        elif chip_id == chips.GS264E:
+            board_id = self._loongson_pi_id()
 
         return board_id
 
@@ -340,6 +342,14 @@ class Board:
             board = boards._ASUS_TINKER_BOARD_IDS
         return board
 
+    def _loongson_pi_id(self):
+        """Check what type of Loongson Pi Board."""
+        board_name = self.detector.check_board_name_value()
+        for board_id, board_names in boards._LOONGSON_PI_BOARD_IDS.items():
+            if board_name in board_names:
+                return board_id
+        return None
+
     @property
     def any_96boards(self):
         """Check whether the current board is any 96boards board."""
@@ -431,6 +441,11 @@ class Board:
         return self.id in boards._ASUS_TINKER_BOARD_IDS
 
     @property
+    def any_loongson_pi_board(self):
+        """Check to see if the current board is a Loongson Pi Board"""
+        return self.id in boards._LOONGSON_PI_BOARD_IDS
+
+    @property
     def any_embedded_linux(self):
         """Check whether the current board is any embedded Linux device."""
         return any(
@@ -451,6 +466,7 @@ class Board:
                 self.any_clockwork_pi_board,
                 self.any_udoo_board,
                 self.any_asus_tinker_board,
+                self.any_loongson_pi_board,
             ]
         )
 
