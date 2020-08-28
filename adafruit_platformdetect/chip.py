@@ -136,6 +136,9 @@ class Chip:
         if self.detector.check_dt_compatible_value("loongson,loongson2k"):
             return chips.GS264E
 
+        if self.detector.check_dt_compatible_value("loongson-2k-soc"):
+            return chips.GS264E
+
         linux_id = None
         hardware = self.detector.get_cpuinfo_field("Hardware")
 
